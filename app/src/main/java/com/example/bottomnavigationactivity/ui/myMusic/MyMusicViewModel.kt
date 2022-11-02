@@ -2,14 +2,17 @@ package com.example.bottomnavigationactivity.ui.myMusic
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.provider.MediaStore
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bottomnavigationactivity.ListOfMusic.ListAdapter
 import com.example.bottomnavigationactivity.ListOfMusic.Music
+import com.example.bottomnavigationactivity.PlayMusicActivity
 
 class MyMusicViewModel() : ViewModel() {
   private val _listOfMusic = MutableLiveData<RecyclerView.Adapter<ListAdapter.ViewHolder>>().apply {
@@ -18,7 +21,7 @@ class MyMusicViewModel() : ViewModel() {
   val listOfMusic: LiveData<RecyclerView.Adapter<ListAdapter.ViewHolder>> = _listOfMusic
 
   @SuppressLint("Recycle")
-  fun getMusic (context: Context) {
+  fun getMusic(context: Context) {
     val projection = arrayOf(
       MediaStore.Audio.Media.TITLE,
       MediaStore.Audio.Media.DATA,
@@ -44,7 +47,13 @@ class MyMusicViewModel() : ViewModel() {
       }
     }
 
-    _listOfMusic.value = ListAdapter(playListAdapter, context)
+    _listOfMusic.value = ListAdapter(playListAdapter, context, object :
+      ListAdapter.OnItemClickListener {
+      override fun onItemClick(item: Music) {
+        val intent = Intent(context, PlayMusicActivity::class.java)
+        intent.putExtra("ListElement", item)
+        startActivity(context, intent, null)
+      }
+    })
   }
-
 }

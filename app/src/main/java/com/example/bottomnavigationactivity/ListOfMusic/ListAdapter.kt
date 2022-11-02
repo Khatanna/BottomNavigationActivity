@@ -13,9 +13,14 @@ import com.example.bottomnavigationactivity.R
 
 class ListAdapter(
   private val items: ArrayList<Music>,
-  private val context: Context
+  private val context: Context,
+  private val listener: OnItemClickListener
 ) :
   RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+
+  interface OnItemClickListener {
+    fun onItemClick(item: Music)
+  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     return ViewHolder(
@@ -24,21 +29,7 @@ class ListAdapter(
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.itemTitle.text = items[position].title
-    holder.moreOptions.setOnClickListener {
-      val popupMenu = PopupMenu(context, holder.moreOptions)
-      popupMenu.inflate(R.menu.option_music)
-      popupMenu.setOnMenuItemClickListener {
-        when(it.itemId) {
-          R.id.addFavorites -> {
-            Toast.makeText(context, "add to favorites", Toast.LENGTH_SHORT).show()
-          }
-        }
-        false
-      }
-
-      popupMenu.show()
-    }
+    holder.bindData(items[position])
   }
 
   override fun getItemCount(): Int {
@@ -52,6 +43,27 @@ class ListAdapter(
     init {
       itemTitle = view.findViewById(R.id.titleOfMusic)
       moreOptions = view.findViewById(R.id.moreOptions)
+    }
+
+    fun bindData(item: Music) {
+      itemTitle.text = item.title
+      moreOptions.setOnClickListener {
+        val popupMenu = PopupMenu(context, moreOptions)
+        popupMenu.inflate(R.menu.option_music)
+        popupMenu.setOnMenuItemClickListener {
+          when (it.itemId) {
+            R.id.addFavorites -> {
+              Toast.makeText(context, "add to favorites", Toast.LENGTH_SHORT).show()
+            }
+          }
+          false
+        }
+
+        popupMenu.show()
+      }
+      itemView.setOnClickListener {
+        listener.onItemClick(item)
+      }
     }
   }
 }

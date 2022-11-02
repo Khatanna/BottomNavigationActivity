@@ -1,22 +1,16 @@
 package com.example.bottomnavigationactivity
 
-import android.Manifest
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.provider.Settings
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -58,11 +52,8 @@ class MainActivity : AppCompatActivity() {
         .setPositiveButton("Otorgar permisos") { dialogInterface, i ->
           startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
         }
-        .setNegativeButton("Mas tarde") { dialogInterface, i ->
-          Toast.makeText(this, "cagaste", Toast.LENGTH_LONG).show()
-        }
         .setCancelable(false).show()
-    } else{
+    } else {
       Toast.makeText(this, "tiene los permisos", Toast.LENGTH_SHORT).show()
     }
   }

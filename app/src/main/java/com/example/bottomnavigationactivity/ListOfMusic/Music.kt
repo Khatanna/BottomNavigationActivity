@@ -1,5 +1,7 @@
 package com.example.bottomnavigationactivity.ListOfMusic
 
-data class Music (
+import java.io.Serializable
+
+data class Music(
   val title: String
-)
+): Serializable
