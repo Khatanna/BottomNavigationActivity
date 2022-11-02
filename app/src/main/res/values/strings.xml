@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">BottomNavigationActivity</string>
+    <string name="app_name">Play Music</string>
     <string name="title_my_music">My Music</string>
     <string name="title_playlist">Playlist</string>
     <string name="title_favorites">Favorites</string>
     <string name="my_music">my music</string>
     <string name="play_list">playList</string>
     <string name="favorites">favorites</string>
+    <string name="addFavorites">add to favorites</string>
+    <string name="addPlaylist">add to playlist</string>
 </resources>

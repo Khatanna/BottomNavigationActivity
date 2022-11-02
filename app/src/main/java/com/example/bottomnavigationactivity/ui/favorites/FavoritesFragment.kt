@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.bottomnavigationactivity.databinding.FragmentNotificationsBinding
+import com.example.bottomnavigationactivity.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
 
-  private var _binding: FragmentNotificationsBinding? = null
+  private var _binding: FragmentFavoritesBinding? = null
 
   private val binding get() = _binding!!
 
@@ -23,7 +23,7 @@ class FavoritesFragment : Fragment() {
     val notificationsViewModel =
       ViewModelProvider(this)[FavoritesViewModel::class.java]
 
-    _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+    _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
     val textView: TextView = binding.textNotifications

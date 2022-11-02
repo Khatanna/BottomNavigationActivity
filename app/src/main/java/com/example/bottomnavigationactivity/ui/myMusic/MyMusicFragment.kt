@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.bottomnavigationactivity.databinding.FragmentHomeBinding
+import com.example.bottomnavigationactivity.databinding.FragmentMyMusicBinding
 
 class MyMusicFragment : Fragment() {
 
-  private var _binding: FragmentHomeBinding? = null
+  private var _binding: FragmentMyMusicBinding? = null
 
   private val binding get() = _binding!!
 
@@ -20,16 +19,18 @@ class MyMusicFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    val homeViewModel =
+    val viewModel =
       ViewModelProvider(this)[MyMusicViewModel::class.java]
 
-    _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    _binding = FragmentMyMusicBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    val textView: TextView = binding.textHome
-    homeViewModel.text.observe(viewLifecycleOwner) {
-      textView.text = it
+    viewModel.listOfMusic.observe(viewLifecycleOwner) {
+      binding.listOfMusic.adapter = it
     }
+
+    viewModel.getMusic(requireContext())
+
     return root
   }
 

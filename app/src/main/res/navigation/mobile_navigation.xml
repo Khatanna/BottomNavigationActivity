@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_my_music">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_my_music"
         android:name="com.example.bottomnavigationactivity.ui.myMusic.MyMusicFragment"
         android:label="@string/title_my_music"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_my_music" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_playlist"
         android:name="com.example.bottomnavigationactivity.ui.playlist.PlaylistFragment"
         android:label="@string/title_playlist"
         tools:layout="@layout/fragment_playlist" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_favorites"
         android:name="com.example.bottomnavigationactivity.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_favorites" />
 </navigation>
