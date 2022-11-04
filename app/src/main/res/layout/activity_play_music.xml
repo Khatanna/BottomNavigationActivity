@@ -6,12 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.airbnb.lottie.LottieAnimationView
+    <!--
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/equalizer"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            android:layout_weight="1"/>
+    -->
+    <ImageView
+        android:id="@+id/cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:lottie_rawRes="@raw/equalizer"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
         android:layout_weight="1"/>
 
     <TextView
@@ -20,7 +28,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         android:textColor="#E91E63"
-        android:textSize="16sp"
+        android:textSize="24sp"
         tools:text="nombre de la musica" />
 
     <LinearLayout
@@ -32,7 +40,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/currentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="20dp"
@@ -46,7 +54,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/totalTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="20dp"
@@ -64,36 +72,44 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/imageButton1"
+        <ImageView
+            android:id="@+id/btnFirstList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_skip_previous_24" />
 
-        <ImageButton
-            android:id="@+id/imageBugsdgtton1"
+        <ImageView
+            android:id="@+id/btnPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_round_fast_rewind_24" />
 
-        <ImageButton
-            android:id="@+id/imageButton1fs"
+        <ImageView
+            android:id="@+id/btnPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_round_play_circle_filled_24" />
 
-        <ImageButton
-            android:id="@+id/imageButtsdfon1"
+        <ImageView
+            android:id="@+id/btnPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_round_pause_circle_filled_24"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_round_fast_forward_24" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
+        <ImageView
+            android:id="@+id/btnEndList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

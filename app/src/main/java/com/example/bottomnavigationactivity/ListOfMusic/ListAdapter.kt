@@ -1,6 +1,7 @@
 package com.example.bottomnavigationactivity.ListOfMusic
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +10,15 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.MyMediaPlayer
+import com.example.bottomnavigationactivity.PlayMusicActivity
 import com.example.bottomnavigationactivity.R
 
 class ListAdapter(
-  private val items: ArrayList<Music>,
-  private val context: Context,
-  private val listener: OnItemClickListener
+  private val songsList: ArrayList<AudioModel>,
+  private val context: Context
 ) :
   RecyclerView.Adapter<ListAdapter.ViewHolder>() {
-
-  interface OnItemClickListener {
-    fun onItemClick(item: Music)
-  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     return ViewHolder(
@@ -29,11 +27,18 @@ class ListAdapter(
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.bindData(items[position])
+    holder.bindData(songsList[position])
+    holder.itemView.setOnClickListener {
+      MyMediaPlayer.getInstance().reset()
+      MyMediaPlayer.currentIndex = position
+      val intent = Intent(context, PlayMusicActivity::class.java)
+      intent.putExtra("list", songsList)
+      context.startActivity(intent)
+    }
   }
 
   override fun getItemCount(): Int {
-    return this.items.size
+    return this.songsList.size
   }
 
   inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -45,7 +50,7 @@ class ListAdapter(
       moreOptions = view.findViewById(R.id.moreOptions)
     }
 
-    fun bindData(item: Music) {
+    fun bindData(item: AudioModel) {
       itemTitle.text = item.title
       moreOptions.setOnClickListener {
         val popupMenu = PopupMenu(context, moreOptions)
@@ -60,9 +65,6 @@ class ListAdapter(
         }
 
         popupMenu.show()
-      }
-      itemView.setOnClickListener {
-        listener.onItemClick(item)
       }
     }
   }
