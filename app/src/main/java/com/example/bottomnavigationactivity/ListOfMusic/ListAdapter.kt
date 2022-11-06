@@ -1,5 +1,6 @@
 package com.example.bottomnavigationactivity.ListOfMusic
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,13 +11,16 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.MyMediaPlayer
+import com.example.bottomnavigationactivity.ui.favorites.FavoritesViewModel
+import com.example.bottomnavigationactivity.MyMediaPlayer
 import com.example.bottomnavigationactivity.PlayMusicActivity
 import com.example.bottomnavigationactivity.R
+import com.example.bottomnavigationactivity.Repository.Favorites
 
 class ListAdapter(
   private val songsList: ArrayList<AudioModel>,
-  private val context: Context
+  private val context: Context,
+  private val favoritesViewModel: FavoritesViewModel
 ) :
   RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
@@ -26,7 +30,7 @@ class ListAdapter(
     )
   }
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+  override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
     holder.bindData(songsList[position])
     holder.itemView.setOnClickListener {
       MyMediaPlayer.getInstance().reset()
@@ -58,6 +62,9 @@ class ListAdapter(
         popupMenu.setOnMenuItemClickListener {
           when (it.itemId) {
             R.id.addFavorites -> {
+              item.apply {
+                favoritesViewModel.addFavorites(Favorites(path, title, duration, albumId))
+              }
               Toast.makeText(context, "add to favorites", Toast.LENGTH_SHORT).show()
             }
           }

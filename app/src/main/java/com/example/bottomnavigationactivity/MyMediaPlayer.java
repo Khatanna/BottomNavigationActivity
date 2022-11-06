@@ -1,4 +1,4 @@
-package com;
+package com.example.bottomnavigationactivity;
 
 import android.media.MediaPlayer;
 

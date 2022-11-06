@@ -6,11 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.MyMediaPlayer
 import com.bumptech.glide.Glide
 import com.example.bottomnavigationactivity.ListOfMusic.AudioModel
 import com.example.bottomnavigationactivity.databinding.ActivityPlayMusicBinding
@@ -20,9 +18,13 @@ import java.util.concurrent.TimeUnit
 
 class PlayMusicActivity : AppCompatActivity() {
   private val mediaPlayer = MyMediaPlayer.getInstance()
-
   private lateinit var songsList: ArrayList<AudioModel>
   private lateinit var currentSong: AudioModel
+
+  companion object {
+    val sArtworkUri: Uri = Uri
+      .parse("content://media/external/audio/albumart")
+  }
 
   private lateinit var binding: ActivityPlayMusicBinding
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,12 +66,6 @@ class PlayMusicActivity : AppCompatActivity() {
 
       override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     })
-
-  }
-
-  companion object {
-    val sArtworkUri: Uri = Uri
-      .parse("content://media/external/audio/albumart")
   }
 
   private fun setResourcesWithMusic() {
@@ -78,7 +74,6 @@ class PlayMusicActivity : AppCompatActivity() {
     val uri = ContentUris.withAppendedId(sArtworkUri, currentSong.albumId)
     Glide.with(this).load(uri).into(binding.cover)
 
-    //  binding.cover.animate()
     binding.title.text = currentSong.title
     binding.totalTime.text = convertToMMSS(currentSong.duration)
 
@@ -100,7 +95,6 @@ class PlayMusicActivity : AppCompatActivity() {
       mediaPlayer.start()
       binding.duration.progress = 0
       binding.duration.max = mediaPlayer.duration
-      // binding.animation.playAnimation()
     } catch (e: IOException) {
       e.printStackTrace()
     }
@@ -135,14 +129,12 @@ class PlayMusicActivity : AppCompatActivity() {
   private fun btnPause() {
     if (mediaPlayer.isPlaying) {
       mediaPlayer.pause()
-      //binding.animation.pauseAnimation()
     }
   }
 
   private fun btnPlay() {
     if (!mediaPlayer.isPlaying) {
       mediaPlayer.start()
-      // binding.animation.playAnimation()
     }
   }
 

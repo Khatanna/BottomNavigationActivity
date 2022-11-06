@@ -76,13 +76,4 @@ class MainActivity : AppCompatActivity() {
       123
     )
   }
-
-  override fun onResume() {
-    super.onResume()
-    /*
-    if (recyclerView != null) {
-      recyclerView.setAdapter(MusicListAdapter(songsList, applicationContext))
-    }
-     */
-  }
 }
