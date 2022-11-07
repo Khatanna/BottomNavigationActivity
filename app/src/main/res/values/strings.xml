@@ -8,4 +8,5 @@
     <string name="favorites">favorites</string>
     <string name="addFavorites">add to favorites</string>
     <string name="addPlaylist">add to playlist</string>
+    <string name="createPlayList">Crear nueva lista de reproducción</string>
 </resources>

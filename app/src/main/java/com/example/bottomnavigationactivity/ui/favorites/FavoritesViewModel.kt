@@ -1,37 +1,31 @@
 package com.example.bottomnavigationactivity.ui.favorites
 
 import android.app.Application
-import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.bottomnavigationactivity.ListOfMusic.AudioModel
-import com.example.bottomnavigationactivity.Repository.Favorites
-import com.example.bottomnavigationactivity.Repository.FavoritesDAO
-import com.example.bottomnavigationactivity.Repository.FavoritesRepository
+import com.example.bottomnavigationactivity.Repository.Music.Music
+import com.example.bottomnavigationactivity.Repository.Music.MusicRepository
 import com.example.bottomnavigationactivity.Repository.MyDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
-  val readAllData: LiveData<List<Favorites>>
-  private val repository: FavoritesRepository
+  private val repository: MusicRepository
+  val readAllData: LiveData<List<Music>>
 
   init {
-    val favoritesDAO = MyDatabase.getInstance(application).favoritesDAO()
-    repository = FavoritesRepository(favoritesDAO)
+    val favoritesDAO = MyDatabase.getInstance(application).MusicDAO()
+    repository = MusicRepository(favoritesDAO)
     readAllData = repository.readAll
   }
 
-  fun addFavorites(music: Favorites) {
+  fun setFavorites(music: Music, isFavorite: Boolean) {
     viewModelScope.launch(Dispatchers.IO) {
-      repository.addFavorite(music)
-    }
-  }
-
-  fun deleteFavorites(music: Favorites) {
-    viewModelScope.launch(Dispatchers.IO) {
-      repository.deleteFavorite(music)
+      music.apply {
+        val updateMusic = Music(path, title, duration, albumId, isFavorite)
+        repository.updateMusic(updateMusic)
+      }
     }
   }
 }

@@ -4,14 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.bottomnavigationactivity.Repository.Music.Music
+import com.example.bottomnavigationactivity.Repository.Music.MusicDAO
+import com.example.bottomnavigationactivity.Repository.PlayList.PlayList
+import com.example.bottomnavigationactivity.Repository.PlaylistMusic.PlaylistMusicCrossRef
 
 @Database(
-  entities = [Favorites::class],
+  entities = [
+    Music::class,
+    PlayList::class
+  ],
   version = 1
 )
 abstract class MyDatabase : RoomDatabase() {
-  abstract fun favoritesDAO(): FavoritesDAO
-  
+  abstract fun MusicDAO(): MusicDAO
+
   companion object {
     private var INSTANCE: MyDatabase? = null
 

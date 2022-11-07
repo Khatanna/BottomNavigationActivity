@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.bottomnavigationactivity.databinding.FragmentPlaylistBinding
 
 class PlaylistFragment : Fragment() {
-
   private var _binding: FragmentPlaylistBinding? = null
-
   private val binding get() = _binding!!
 
   override fun onCreateView(
@@ -26,10 +24,6 @@ class PlaylistFragment : Fragment() {
     _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    val textView: TextView = binding.textDashboard
-    dashboardViewModel.text.observe(viewLifecycleOwner) {
-      textView.text = it
-    }
     return root
   }
 

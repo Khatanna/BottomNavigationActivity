@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.bottomnavigationactivity.ListOfMusic.AudioModel
+import com.example.bottomnavigationactivity.Repository.Music.Music
 import com.example.bottomnavigationactivity.databinding.ActivityPlayMusicBinding
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit
 
 class PlayMusicActivity : AppCompatActivity() {
   private val mediaPlayer = MyMediaPlayer.getInstance()
-  private lateinit var songsList: ArrayList<AudioModel>
-  private lateinit var currentSong: AudioModel
+  private lateinit var songsList: Array<Music>
+  private lateinit var currentSong: Music
 
   companion object {
     val sArtworkUri: Uri = Uri
@@ -31,7 +31,7 @@ class PlayMusicActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityPlayMusicBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    songsList = intent.getSerializableExtra("list") as ArrayList<AudioModel>
+    songsList = intent.getSerializableExtra("list") as Array<Music>
 
     setResourcesWithMusic()
 

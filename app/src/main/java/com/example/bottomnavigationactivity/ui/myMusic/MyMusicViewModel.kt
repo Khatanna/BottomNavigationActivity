@@ -1,35 +1,32 @@
 package com.example.bottomnavigationactivity.ui.myMusic
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.database.Cursor
-import android.os.Build
-import android.provider.MediaStore
-import androidx.annotation.RequiresApi
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
-import com.example.bottomnavigationactivity.ui.favorites.FavoritesViewModel
-import com.example.bottomnavigationactivity.ListOfMusic.AudioModel
-import com.example.bottomnavigationactivity.ListOfMusic.ListAdapter
-import java.io.File
+import androidx.lifecycle.viewModelScope
+import com.example.bottomnavigationactivity.Repository.Music.Music
+import com.example.bottomnavigationactivity.Repository.Music.MusicRepository
+import com.example.bottomnavigationactivity.Repository.MyDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class MyMusicViewModel() : ViewModel() {
-  private val _listOfMusic = MutableLiveData<RecyclerView.Adapter<ListAdapter.ViewHolder>>().apply {
-    value = null
-  }
-  val listOfMusic: LiveData<RecyclerView.Adapter<ListAdapter.ViewHolder>> = _listOfMusic
+class MyMusicViewModel(application: Application) : AndroidViewModel(application) {
+  private val musicRepository: MusicRepository
+  val listOfMusic: LiveData<List<Music>>
 
-  fun setListOfMusic(
-    listOfMusic: ArrayList<AudioModel>,
-    context: Context,
-    favoritesViewModel: FavoritesViewModel
-  ) {
-    _listOfMusic.value = ListAdapter(listOfMusic, context, favoritesViewModel)
+  init {
+    val musicDAO = MyDatabase.getInstance(application).MusicDAO()
+    musicRepository = MusicRepository(musicDAO)
+    listOfMusic = musicRepository.readAll
   }
 
-  fun isEmptyList(): Boolean {
-    return _listOfMusic.value == null
+  fun databaseIsEmpty (): Boolean {
+    return musicRepository.readAll.value?.isEmpty() ?: true
+  }
+
+  fun addMusic(musics: List<Music>) {
+    viewModelScope.launch(Dispatchers.IO) {
+      musicRepository.addMusic(musics)
+    }
   }
 }

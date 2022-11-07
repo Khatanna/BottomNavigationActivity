@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.bottomnavigationactivity.ListOfMusic.AudioModel
 import com.example.bottomnavigationactivity.databinding.FragmentFavoritesBinding
-import com.example.bottomnavigationactivity.ListOfMusic.ListAdapter
+import com.example.bottomnavigationactivity.Adapters.ListAdapter
 
 class FavoritesFragment : Fragment() {
-
   private var _binding: FragmentFavoritesBinding? = null
-
   private val binding get() = _binding!!
 
   override fun onCreateView(
@@ -27,16 +24,17 @@ class FavoritesFragment : Fragment() {
     _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    favoritesViewModel.readAllData.observe(viewLifecycleOwner) {
-      val arrayList = ArrayList<AudioModel>()
-
-      it.forEach { favorite ->
-        favorite.apply {
-          arrayList.add(AudioModel(path, title, duration, albumId))
-        }
+    favoritesViewModel.readAllData.observe(viewLifecycleOwner) { it ->
+      binding.listOfFavorites.adapter = ListAdapter(
+        it.filter { music ->
+          music.isFavorite
+        },
+        requireContext()
+      ) { music, value ->
+        favoritesViewModel.setFavorites(music, value)
       }
-      binding.listOfFavorites.adapter = ListAdapter(arrayList, requireContext(), favoritesViewModel)
     }
+
     return root
   }
 
